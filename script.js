@@ -1,10 +1,17 @@
+// =========================================
+// Global Config & Elements
+// =========================================
+
+// SVGCircleElement for the progress ring
 const circle = document.querySelector('.progress-ring__circle');
 const radius = circle.r.baseVal.value;
 const circumference = radius * 2 * Math.PI;
 
+// Initialize the ring stroke properties
 circle.style.strokeDasharray = `${circumference} ${circumference}`;
-circle.style.strokeDashoffset = 0; // Start full
+circle.style.strokeDashoffset = 0; // Start with a full ring
 
+// DOM Elements
 const timeDisplay = document.getElementById('time');
 const startBtn = document.getElementById('start-btn');
 const pauseBtn = document.getElementById('pause-btn');
@@ -12,8 +19,9 @@ const resetBtn = document.getElementById('reset-btn');
 const minutesInput = document.getElementById('minutes-input');
 const timerSound = document.getElementById('timer-sound');
 
+// Timer State Variables
 let interval;
-let totalTime = 25 * 60; // default
+let totalTime = 25 * 60; // Default time in seconds (25 mins)
 let currentTime = totalTime;
 let isRunning = false;
 

@@ -4,44 +4,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Application Title -->
     <title>Focus | Premium Pomodoro Timer</title>
+
+    <!-- Preconnect to Google Fonts for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Import Outfit font family -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- Principal Stylesheet -->
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
     <div class="container">
+        <!-- Header Section -->
         <header>
             <h1>Focus Timer</h1>
             <p>Stay productive, one interval at a time.</p>
         </header>
 
+        <!-- Timer Display Section with SVG Ring -->
         <div class="timer-display">
+            <!-- Scalable Vector Graphic for the progress ring -->
             <svg class="progress-ring" width="300" height="300">
+                <!-- Background circle (faint track) -->
                 <circle class="progress-ring__circle-bg" stroke="rgba(255, 255, 255, 0.1)" stroke-width="12"
                     fill="transparent" r="130" cx="150" cy="150" />
+                <!-- Foreground circle (progress indicator) -->
                 <circle class="progress-ring__circle" stroke="#00d2ff" stroke-width="12" fill="transparent" r="130"
                     cx="150" cy="150" />
             </svg>
+            <!-- Numeric Time Display -->
             <div class="time-text">
                 <span id="time">25:00</span>
             </div>
         </div>
 
+        <!-- Custom Settings Section -->
         <div class="settings">
             <label for="minutes-input">Set Minutes:</label>
             <input type="number" id="minutes-input" value="25" min="1" max="99">
         </div>
 
+        <!-- Control Buttons Section -->
         <div class="controls">
             <button id="start-btn" class="btn btn-primary">Start</button>
             <button id="pause-btn" class="btn btn-secondary" disabled>Pause</button>
             <button id="reset-btn" class="btn btn-tertiary">Reset</button>
         </div>
     </div>
+
+    <!-- Audio Element for Alarm Sound -->
     <audio id="timer-sound" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg"></audio>
+
+    <!-- Main Script -->
     <script src="script.js"></script>
 </body>
 
