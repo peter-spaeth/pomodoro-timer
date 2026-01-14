@@ -25,17 +25,30 @@ let totalTime = 25 * 60; // Default time in seconds (25 mins)
 let currentTime = totalTime;
 let isRunning = false;
 
+/**
+ * Updates the SVG ring's stroke-dashoffset to represent progress.
+ * @param {number} percent - The percentage of time remaining (0-100).
+ */
 function setProgress(percent) {
     const offset = circumference - (percent / 100) * circumference;
     circle.style.strokeDashoffset = offset;
 }
 
+/**
+ * Formats a time in seconds to "MM:SS" string.
+ * @param {number} seconds - Time to format.
+ * @returns {string} Formatted, zero-padded time string.
+ */
 function formatTime(seconds) {
     const m = Math.floor(seconds / 60);
     const s = seconds % 60;
     return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
 }
 
+/**
+ * Core loop function called every second.
+ * Decrements time, updates UI, checks for completion.
+ */
 function updateTimer() {
     currentTime--;
     timeDisplay.textContent = formatTime(currentTime);
@@ -44,29 +57,34 @@ function updateTimer() {
     const percent = (currentTime / totalTime) * 100;
     setProgress(percent);
 
+    // Check if timer has finished
     if (currentTime <= 0) {
         clearInterval(interval);
         isRunning = false;
 
+        // Update UI logic
         startBtn.disabled = false;
         pauseBtn.disabled = true;
         minutesInput.disabled = false;
 
+        // Ensure visual completion
         currentTime = 0;
         timeDisplay.textContent = "00:00";
         setProgress(0);
 
-        // Play sound
+        // Trigger completion sound
         timerSound.play().catch(e => console.log('Audio play failed:', e));
     }
 }
 
+/**
+ * Starts or Resumes the timer.
+ */
 function startTimer() {
     if (isRunning) return;
 
-    // Check if we need to start from a fresh state or resume
+    // If starting from 0, reset first
     if (currentTime === 0) {
-        // Reset to input value if it finished
         resetTimer();
         return;
     }
@@ -74,11 +92,14 @@ function startTimer() {
     isRunning = true;
     startBtn.disabled = true;
     pauseBtn.disabled = false;
-    minutesInput.disabled = true;
+    minutesInput.disabled = true; // Lock input while running
 
     interval = setInterval(updateTimer, 1000);
 }
 
+/**
+ * Pauses the timer without resetting.
+ */
 function pauseTimer() {
     if (!isRunning) return;
 
@@ -88,15 +109,20 @@ function pauseTimer() {
     pauseBtn.disabled = true;
 }
 
+/**
+ * Resets the timer to the value defined in the input field.
+ */
 function resetTimer() {
     pauseTimer();
-    // Read input
+    // Read user input for duration
     let mins = parseInt(minutesInput.value);
     if (isNaN(mins) || mins < 1) mins = 25;
 
+    // Reset state
     totalTime = mins * 60;
     currentTime = totalTime;
 
+    // Update UI
     timeDisplay.textContent = formatTime(currentTime);
     setProgress(100);
 
